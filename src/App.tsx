@@ -1,7 +1,7 @@
 import "./App.css";
 import { useState, useEffect } from "react";
 import { DataClient } from "./DataServiceClientPb";
-import { TweetStreamRequest, Bird, BirdsRequest, FreebirdEntity } from "./data_pb";
+import { TweetStreamRequest, BirdRequest, Bird, BirdsRequest, FreebirdEntity } from "./data_pb";
 import Card from "./Card";
 
 type BirdState = {
@@ -41,9 +41,10 @@ function App() {
     }
     const fetchBootstrap = async () => {
       const _birds = await client.getAllBirds(new BirdsRequest(), null);
-      console.log(_birds.getBirdsList())
+      const req = new BirdRequest()
+      req.setId(_birds.getBirdsList()[0].getId())
+      console.log(await client.getBirdTweets(req, null))
       _birds.getBirdsList().forEach((b) => birds.set(b.getId(), { b, twts: [new Date()] }));
-      setBirds(birds);
     }
 
     fetchBootstrap().catch((err) => {
@@ -54,7 +55,7 @@ function App() {
     return () => {
       res.removeListener("data", getData)
     }
-  }, [birds]);
+  }, []);
 
   const score = (b: Bird) => {
     return b.getNPositive() / (b.getNNegative() + 1)
@@ -113,16 +114,13 @@ function App() {
       <div className="flex relative flex-col w-5/12 bg-white border-t-0 border-b-0 border-1">
 
         {
-          sortedBirds().map((b: BirdState) => {
-            if (b.b.getEntityType() === FreebirdEntity.COMPANY && toggle)
-              return (
-                <Card key={b.b.getId()} bird={b.b} twts={b.twts} />
-              )
-            if (b.b.getEntityType() === FreebirdEntity.SHILL && !toggle)
-              return (
-                <Card key={b.b.getId()} bird={b.b} twts={b.twts} />
-              )
-            return <></>
+          toggle && sortedBirds().filter((b : BirdState) => b.b.getEntityType() == FreebirdEntity.COMPANY).map((b : BirdState, i) => {
+            return (<Card key={i} bird={b.b} twts={b.twts}></Card>)
+          })
+        }
+        {
+          !toggle && sortedBirds().filter((b: BirdState) => b.b.getEntityType() == FreebirdEntity.SHILL).map((b : BirdState, i) => {
+            return (<Card key={i} bird={b.b} twts={b.twts}></Card>)
           })
         }
       </div>
