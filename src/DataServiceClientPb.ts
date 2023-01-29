@@ -43,16 +43,16 @@ export class DataClient {
     '/data.Data/TweetStream',
     grpcWeb.MethodType.SERVER_STREAMING,
     data_pb.TweetStreamRequest,
-    data_pb.TweetStreamResponse,
+    data_pb.Bird,
     (request: data_pb.TweetStreamRequest) => {
       return request.serializeBinary();
     },
-    data_pb.TweetStreamResponse.deserializeBinary
+    data_pb.Bird.deserializeBinary
   );
 
   tweetStream(
     request: data_pb.TweetStreamRequest,
-    metadata?: grpcWeb.Metadata): grpcWeb.ClientReadableStream<data_pb.TweetStreamResponse> {
+    metadata?: grpcWeb.Metadata): grpcWeb.ClientReadableStream<data_pb.Bird> {
     return this.client_.serverStreaming(
       this.hostname_ +
         '/data.Data/TweetStream',
@@ -61,47 +61,133 @@ export class DataClient {
       this.methodDescriptorTweetStream);
   }
 
-  methodDescriptorEntityData = new grpcWeb.MethodDescriptor(
-    '/data.Data/EntityData',
+  methodDescriptorGetBird = new grpcWeb.MethodDescriptor(
+    '/data.Data/GetBird',
     grpcWeb.MethodType.UNARY,
-    data_pb.EntityRequest,
-    data_pb.EntityResponse,
-    (request: data_pb.EntityRequest) => {
+    data_pb.BirdRequest,
+    data_pb.Bird,
+    (request: data_pb.BirdRequest) => {
       return request.serializeBinary();
     },
-    data_pb.EntityResponse.deserializeBinary
+    data_pb.Bird.deserializeBinary
   );
 
-  entityData(
-    request: data_pb.EntityRequest,
-    metadata: grpcWeb.Metadata | null): Promise<data_pb.EntityResponse>;
+  getBird(
+    request: data_pb.BirdRequest,
+    metadata: grpcWeb.Metadata | null): Promise<data_pb.Bird>;
 
-  entityData(
-    request: data_pb.EntityRequest,
+  getBird(
+    request: data_pb.BirdRequest,
     metadata: grpcWeb.Metadata | null,
     callback: (err: grpcWeb.RpcError,
-               response: data_pb.EntityResponse) => void): grpcWeb.ClientReadableStream<data_pb.EntityResponse>;
+               response: data_pb.Bird) => void): grpcWeb.ClientReadableStream<data_pb.Bird>;
 
-  entityData(
-    request: data_pb.EntityRequest,
+  getBird(
+    request: data_pb.BirdRequest,
     metadata: grpcWeb.Metadata | null,
     callback?: (err: grpcWeb.RpcError,
-               response: data_pb.EntityResponse) => void) {
+               response: data_pb.Bird) => void) {
     if (callback !== undefined) {
       return this.client_.rpcCall(
         this.hostname_ +
-          '/data.Data/EntityData',
+          '/data.Data/GetBird',
         request,
         metadata || {},
-        this.methodDescriptorEntityData,
+        this.methodDescriptorGetBird,
         callback);
     }
     return this.client_.unaryCall(
     this.hostname_ +
-      '/data.Data/EntityData',
+      '/data.Data/GetBird',
     request,
     metadata || {},
-    this.methodDescriptorEntityData);
+    this.methodDescriptorGetBird);
+  }
+
+  methodDescriptorGetAllBirds = new grpcWeb.MethodDescriptor(
+    '/data.Data/GetAllBirds',
+    grpcWeb.MethodType.UNARY,
+    data_pb.BirdsRequest,
+    data_pb.Birds,
+    (request: data_pb.BirdsRequest) => {
+      return request.serializeBinary();
+    },
+    data_pb.Birds.deserializeBinary
+  );
+
+  getAllBirds(
+    request: data_pb.BirdsRequest,
+    metadata: grpcWeb.Metadata | null): Promise<data_pb.Birds>;
+
+  getAllBirds(
+    request: data_pb.BirdsRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: data_pb.Birds) => void): grpcWeb.ClientReadableStream<data_pb.Birds>;
+
+  getAllBirds(
+    request: data_pb.BirdsRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: data_pb.Birds) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/data.Data/GetAllBirds',
+        request,
+        metadata || {},
+        this.methodDescriptorGetAllBirds,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/data.Data/GetAllBirds',
+    request,
+    metadata || {},
+    this.methodDescriptorGetAllBirds);
+  }
+
+  methodDescriptorGetBirdTweets = new grpcWeb.MethodDescriptor(
+    '/data.Data/GetBirdTweets',
+    grpcWeb.MethodType.UNARY,
+    data_pb.BirdRequest,
+    data_pb.Tweets,
+    (request: data_pb.BirdRequest) => {
+      return request.serializeBinary();
+    },
+    data_pb.Tweets.deserializeBinary
+  );
+
+  getBirdTweets(
+    request: data_pb.BirdRequest,
+    metadata: grpcWeb.Metadata | null): Promise<data_pb.Tweets>;
+
+  getBirdTweets(
+    request: data_pb.BirdRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: data_pb.Tweets) => void): grpcWeb.ClientReadableStream<data_pb.Tweets>;
+
+  getBirdTweets(
+    request: data_pb.BirdRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: data_pb.Tweets) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/data.Data/GetBirdTweets',
+        request,
+        metadata || {},
+        this.methodDescriptorGetBirdTweets,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/data.Data/GetBirdTweets',
+    request,
+    metadata || {},
+    this.methodDescriptorGetBirdTweets);
   }
 
 }
