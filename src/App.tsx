@@ -19,13 +19,13 @@ function App() {
     setTimeout(() => setPopping(false), 500);
   };
 
-  const MINUTE = 60 * 1000
 
 
   useEffect(() => {
     const client = new DataClient("http://localhost:8080");
     const res = client.tweetStream(new TweetStreamRequest());
 
+    const MINUTE = 60 * 1000
     const getData = (b: Bird) => {
       pop()
       const curr = birds.get(b.getId())
@@ -122,6 +122,7 @@ function App() {
               return (
                 <Card key={b.b.getId()} bird={b.b} twts={b.twts} />
               )
+            return <></>
           })
         }
       </div>
