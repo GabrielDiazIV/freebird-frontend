@@ -21,7 +21,7 @@ export default function CardDetails({ tweets }: CardDetailProps) {
           //   <div>{t.getScore()}</div>
           // </div>
           return (
-            <div className="grid grid-cols-2 gap-3 pr-8 m-5">
+            <div className="grid grid-cols-2 gap-3 pr-8 m-5 border-b-1">
               <div className="p-0.5 flex flex-col justify-between gap-x-0.5">
                 <span className="text-xl">
                       <span className="font-bold">{t.getAuthorName()}</span>{ "@" + t.getAuthorUsername()}
@@ -35,7 +35,7 @@ export default function CardDetails({ tweets }: CardDetailProps) {
               <div className="p-0.5 flex flex-col justify-between gap-x-0.5">
                 <span className="ml-1 text-xs tweet-color">Sentiment Score</span>
                 <span className="text-xl">
-                  {t.getScore()}
+                  {t.getScore() >=0 ? t.getScore().toString().substring(0,4) : t.getScore().toString().substring(0,5) }
                 </span>
               </div>
             </div>
