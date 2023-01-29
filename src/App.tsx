@@ -17,7 +17,7 @@ function App() {
   const getData = (x: Bird) => console.log(x.getImgUrl());
 
   useEffect(() => {
-    const client = new DataClient("http://localhost:8080");
+    const client = new DataClient("http://54.176.207.60:8080");
     const res = client.tweetStream(new TweetStreamRequest());
     // @ts-ignore
     const id = res.on("data", getData);
